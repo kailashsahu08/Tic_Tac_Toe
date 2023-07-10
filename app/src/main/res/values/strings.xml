@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Tic Tac Toe</string>
+    <string name="restart">Restart</string>
+    <string name="result">Result Will Be Shown Here</string>
+    <string name="cdBtn">click button</string>
+    <string name="winner">Winner is x</string>
+</resources>

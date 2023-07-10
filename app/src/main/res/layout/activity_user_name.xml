@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".user_name">
+    <TextView
+        android:id="@+id/fuser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enter the Name of the first user :"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="25sp"
+        android:layout_marginTop="100dp"/>
+    <EditText
+        android:id="@+id/name1"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:hint="Name of User !"
+        android:paddingEnd="20dp"
+        android:paddingStart="20dp"
+        android:layout_marginTop="50dp"
+        android:layout_below="@+id/fuser"
+        android:elevation="30dp" />
+
+    <TextView
+        android:id="@+id/suser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enter the Name of the first user :"
+        android:layout_below="@+id/name1"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="25sp"
+        android:layout_marginTop="100dp"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:hint="Name of User !"
+        android:paddingStart="50dp"
+        android:layout_marginTop="50dp"
+        android:layout_below="@+id/suser"
+        android:elevation="30dp"/>
+</RelativeLayout>
