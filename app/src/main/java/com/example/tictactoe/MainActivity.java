@@ -2,26 +2,49 @@ package com.example.tictactoe;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 //import android.widget.TextView;
+import android.widget.GridLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-    Button btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9,rst;
-    String b1, b2, b3, b4, b5, b6, b7, b8, b9;
-    int ed = 0, count = 0;
-    TextView txt1;
+    ImageView btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9;
+    Button rst;
+    private String p1name,p2name;
+    boolean win=true;
+    private int arr[][]=new int[3][3];
+    int ed = 0, count = 0,p1w=0,p1l=0,p1d=0,p2w=0,p2l=0,p2d=0;
+    TextView txt1,txt2,p1win,p2win,p1lose,p2lose,p1draw,p2draw,nameOfP1,nameOfP2;
+    private GridLayout gridLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        gridLayout = findViewById(R.id.gridLayout);
+        arrInitialize();
         init();
+        Intent name = getIntent();
+        p1name = name.getStringExtra("p1name");
+        p2name = name.getStringExtra("p2name");
+        nameOfP1.setText(p1name);
+        nameOfP2.setText(p2name);
     }
-
+    public void arrInitialize()
+    {
+        for(int i=0;i<3;i++)
+        {
+            for(int j=0;j<3;j++)
+            {
+                arr[i][j]=0;
+            }
+        }
+    }
     public void init() {
         btn1 = findViewById(R.id.btn1);
         btn2 = findViewById(R.id.btn2);
@@ -34,57 +57,126 @@ public class MainActivity extends AppCompatActivity {
         btn9 = findViewById(R.id.btn9);
         rst = findViewById(R.id.rst);
         txt1 = findViewById(R.id.txt1);
+        txt2 = findViewById(R.id.txt2);
+        p1win = findViewById(R.id.p1win);
+        p1lose = findViewById(R.id.p1lose);
+        p1draw = findViewById(R.id.p1draw);
+        nameOfP1 = findViewById(R.id.nameOfP1);
+        p2win = findViewById(R.id.p2win);
+        p2lose = findViewById(R.id.p2lose);
+        p2draw = findViewById(R.id.p2draw);
+        nameOfP2 = findViewById(R.id.nameOfp2);
     }
 
     public void click(View b) {
-        Button btc = (Button) b;
-        if (btc.getText().toString().equals("")) {
+        ImageView btc = (ImageView) b;
+        int index = gridLayout.indexOfChild(b);
+        int row = index/3;
+        int col = index%3;
+        if (arr[row][col]==0 && win) {
             count++;
             if (ed == 0) {
-                btc.setText("X");
+                btc.setImageResource(R.drawable.rec);
+                txt1.setText(p1name+" TURN");
+                txt2.setText("");
+                arr[row][col] = 2;
                 ed = 1;
             } else {
-                btc.setText("o");
+                btc.setImageResource(R.drawable.close);
+                txt1.setText("");
+                txt2.setText(p2name+" TURN");
+                arr[row][col]=1;
                 ed = 0;
             }
-
-            b1 = btn1.getText().toString();
-            b2 = btn2.getText().toString();
-            b3 = btn3.getText().toString();
-            b4 = btn4.getText().toString();
-            b5 = btn5.getText().toString();
-            b6 = btn6.getText().toString();
-            b7 = btn7.getText().toString();
-            b8 = btn8.getText().toString();
-            b9 = btn9.getText().toString();
-
             if (count > 4) {
-                if (b1.equals(b2) && b2.equals(b3) && !b1.equals("")) {
-                    txt1.setText("The winner is "+b1);
+                if (arr[row][0]==arr[row][1] && arr[row][1]==arr[row][2] &&  arr[row][0]!=0) {
+                    if(arr[row][0]==2)
+                    {
+                        p1w++;
+                        p2l++;
+                        p1win.setText(p1w+"");
+                        p2lose.setText(p2l+"");
+                        nameOfP1.setText("WINNER");
+                        txt1.setText("THE WINNER is "+p1name);
+                    }
+                    else
+                    {
+                        p1l++;
+                        p2w++;
+                        p2win.setText(p2w+"");
+                        p1lose.setText(p1l+"");
+                        nameOfP2.setText("WINNER");
+                        txt2.setText("THE WINNER is "+p2name);
+                    }
+                    win=false;
                     newgame();
-                } else if (b4.equals(b5) && b5.equals(b6) && !b4.equals("")) {
-                    txt1.setText("The winner is "+b6);
+                } else if (arr[0][col]==arr[1][col] && arr[1][col]==arr[2][col] && arr[0][col]!=0) {
+                    if(arr[0][col]==2) {
+                        p1w++;
+                        p2l++;
+                        p1win.setText(p1w+"");
+                        p2lose.setText(p2l+"");
+                        nameOfP1.setText("WINNER");
+                        txt1.setText("THE WINNER is "+p1name);
+                    }
+                    else {
+                        p1l++;
+                        p2w++;
+                        p2win.setText(p2w+"");
+                        p1lose.setText(p1l+"");
+                        nameOfP2.setText("WINNER");
+                        txt2.setText("THE WINNER is "+p2name);
+                    }
+                    win = false;
                     newgame();
-                } else if (b7.equals(b8) && b8.equals(b9) && !b7.equals("")) {
-                    txt1.setText("The winner is "+b7);
+                } else if (arr[0][0]==arr[1][1] && arr[1][1]==arr[2][2] && arr[0][0]!=0) {
+                    if(arr[0][0]==2) {
+                        p1w++;
+                        p2l++;
+                        p1win.setText(p1w+"");
+                        p2lose.setText(p2l+"");
+                        nameOfP1.setText("WINNER");
+                        txt1.setText("THE WINNER is "+p1name);
+                    }
+                    else {
+                        p1l++;
+                        p2w++;
+                        p2win.setText(p2w+"");
+                        p1lose.setText(p1l+"");
+                        nameOfP2.setText("WINNER");
+                        txt2.setText("THE WINNER is "+p2name);
+
+                    }
+                    win=false;
                     newgame();
-                } else if (b1.equals(b4) && b4.equals(b7) && !b1.equals("")) {
-                    txt1.setText("The winner is "+b1);
-                    newgame();
-                } else if (b2.equals(b5) && b5.equals(b8) && !b2.equals("")) {
-                    txt1.setText("The winner is "+b2);
-                    newgame();
-                } else if (b3.equals(b6) && b6.equals(b9) && !b3.equals("")) {
-                    txt1.setText("The winner is "+b3);
-                    newgame();
-                } else if (b1.equals(b5) && b5.equals(b9) && !b1.equals("")) {
-                    txt1.setText("The winner is "+b1);
-                    newgame();
-                } else if (b3.equals(b5) && b5.equals(b7) && !b3.equals("")) {
-                    txt1.setText("The winner is "+b3);
+                }else if (arr[0][2]==arr[1][1] && arr[1][1]==arr[2][0] && arr[1][1]!=0) {
+                    if(arr[2][0]==2){
+                        p1w++;
+                        p2l++;
+                        p1win.setText(p1w+"");
+                        p2lose.setText(p2l+"");
+                        nameOfP1.setText("WINNER");
+                        txt1.setText("THE WINNER is "+p1name);
+                    }
+                    else {
+                        p1l++;
+                        p2w++;
+                        p2win.setText(p2w+"");
+                        p1lose.setText(p1l+"");
+                        nameOfP2.setText("WINNER");
+                        txt2.setText("THE WINNER is "+p2name);
+                    }
+                    win=false;
                     newgame();
                 } else if (count == 9) {
-                    txt1.setText("The match is draw");
+                    p1d++;
+                    p2d++;
+                    p1draw.setText(p1d+"");
+                    p2draw.setText(p2d+"");
+                    nameOfP1.setText("DRAW");
+                    nameOfP2.setText("DRAW");
+                    txt1.setText("MATCH DRAW");
+                    txt2.setText("MATCH DRAW");
                     newgame();
                 }
             }
@@ -96,34 +188,58 @@ public class MainActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                btn1.setText("");
-                btn2.setText("");
-                btn3.setText("");
-                btn4.setText("");
-                btn5.setText("");
-                btn6.setText("");
-                btn7.setText("");
-                btn8.setText("");
-                btn9.setText("");
-                txt1.setText("result shown here");
-                ed =0;
+                arrInitialize();
+                btn1.setImageResource(0);
+                btn2.setImageResource(0);
+                btn3.setImageResource(0);
+                btn4.setImageResource(0);
+                btn5.setImageResource(0);
+                btn6.setImageResource(0);
+                btn7.setImageResource(0);
+                btn8.setImageResource(0);
+                btn9.setImageResource(0);
+                nameOfP1.setText(p1name);
+                nameOfP2.setText(p2name);
+                win = true;
+                ed = (ed==1)?0:1 ;
                 count =0;
+                nameOfP1.setText(p1name);
+                nameOfP2.setText(p2name);
+                if (ed == 0) {
+                    txt1.setText(p1name+" TURN");
+                    txt2.setText("");
+                } else {
+                    txt1.setText("");
+                    txt2.setText(p2name+" TURN");
+                }
             }
         },4000);
     }
     public void restart(View r)
     {
-        btn1.setText("");
-        btn2.setText("");
-        btn3.setText("");
-        btn4.setText("");
-        btn5.setText("");
-        btn6.setText("");
-        btn7.setText("");
-        btn8.setText("");
-        btn9.setText("");
-        txt1.setText("result shown here");
-        ed =0;
+        arrInitialize();
+        btn1.setImageResource(0);
+        btn2.setImageResource(0);
+        btn3.setImageResource(0);
+        btn4.setImageResource(0);
+        btn5.setImageResource(0);
+        btn6.setImageResource(0);
+        btn7.setImageResource(0);
+        btn8.setImageResource(0);
+        btn9.setImageResource(0);
+        nameOfP1.setText(p1name);
+        nameOfP2.setText(p2name);
+        win = true;
+        ed = (ed==1)?0:1 ;
         count =0;
+        nameOfP1.setText(p1name);
+        nameOfP2.setText(p2name);
+        if (ed == 0) {
+            txt1.setText(p1name+" TURN");
+            txt2.setText("");
+        } else {
+            txt1.setText("");
+            txt2.setText(p2name+" TURN");
+        }
     }
 }
