@@ -34,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
         p2name = name.getStringExtra("p2name");
         nameOfP1.setText(p1name);
         nameOfP2.setText(p2name);
+        txt1.setText(p1name+" TURN IS X");
+        txt2.setText("");
     }
     public void arrInitialize()
     {
@@ -77,14 +79,14 @@ public class MainActivity extends AppCompatActivity {
             count++;
             if (ed == 0) {
                 btc.setImageResource(R.drawable.rec);
-                txt1.setText(p1name+" TURN");
-                txt2.setText("");
+                txt1.setText("");
+                txt2.setText(p2name+" TURN IS o");
                 arr[row][col] = 2;
                 ed = 1;
             } else {
                 btc.setImageResource(R.drawable.close);
-                txt1.setText("");
-                txt2.setText(p2name+" TURN");
+                txt1.setText(p1name+" TURN IS X");
+                txt2.setText("");
                 arr[row][col]=1;
                 ed = 0;
             }
